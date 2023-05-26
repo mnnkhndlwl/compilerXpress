@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var app = express();
 var compilePython = require('./modules/pymodule');
+var compileJava = require('./modules/javamodule');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -17,13 +18,22 @@ app.post("/compilecode", function (req, res) {
   var lang = req.body.lang;
   if (lang === "Python") {
     if (inputRadio === "true") {
-     // var envData = { OS: "windows" };
       compilePython.compilepywithinput(code, input, function (data) {
         res.send(data);
       });
     } else {
-     // var envData = { OS: "windows" };
       compilePython.compilepy(code, function (data) {
+        res.send(data);
+      });
+    }
+  }
+  else if (lang === "Java") {
+    if (inputRadio === "true") {
+      compileJava.compileJavaWithInput(code, input, function (data) {
+        res.send(data);
+      });
+    } else {
+      compileJava.compileJava(code, function (data) {
         res.send(data);
       });
     }
