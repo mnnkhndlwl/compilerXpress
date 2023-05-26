@@ -16,19 +16,18 @@ app.post("/compilecode", function (req, res) {
   var inputRadio = req.body.inputRadio;
   var lang = req.body.lang;
   if (lang === "Python") {
-    // if (inputRadio === "true") {
-    //   var envData = { OS: "windows" };
-    //   compiler.compilePythonWithInput(envData, code, input, function (data) {
-    //     res.send(data);
-    //   });
-    // } else {
-      // var envData = { OS: "windows" };
+    if (inputRadio === "true") {
+     // var envData = { OS: "windows" };
+      compilePython.compilepywithinput(code, input, function (data) {
+        res.send(data);
+      });
+    } else {
+     // var envData = { OS: "windows" };
       compilePython.compilepy(code, function (data) {
         res.send(data);
       });
-   // }
+    }
   }
-  
 });
 
 app.listen(5000, () => {
