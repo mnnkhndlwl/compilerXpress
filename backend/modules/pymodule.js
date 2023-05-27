@@ -48,6 +48,9 @@ exports.compilepywithinput = function (code, input, fn) {
   fs.writeFile(path, code, function (err) {
     if (!err) {
       fs.writeFile(pathdusra, input, function (err) {
+        if(err) {
+          console.log(err);
+        }
         if (!err) {
           var command = "python " + path + "< " + pathdusra;
           exec(command, function (error, stdout, stderr) {

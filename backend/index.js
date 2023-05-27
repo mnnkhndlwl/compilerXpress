@@ -4,9 +4,11 @@ var app = express();
 var compilePython = require("./modules/pymodule");
 var compileJava = require("./modules/javamodule");
 var compileCPP = require('./modules/cppmodule');
+var cors = require('cors');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
@@ -17,24 +19,41 @@ app.post("/compilecode", function (req, res) {
   var input = req.body.input;
   var inputRadio = req.body.inputRadio;
   var lang = req.body.lang;
+  console.log(code + input + inputRadio + lang);
   if (lang === "Python") {
     if (inputRadio === "true") {
       compilePython.compilepywithinput(code, input, function (data) {
-        res.send(data);
+        if (data.error) {
+          res.send(data.error);
+        } else {
+          res.send(data.output);
+        }
       });
     } else {
       compilePython.compilepy(code, function (data) {
-        res.send(data);
+        if (data.error) {
+          res.send(data.error);
+        } else {
+          res.send(data.output);
+        }
       });
     }
   } else if (lang === "Java") {
     if (inputRadio === "true") {
       compileJava.compileJavaWithInput(code, input, function (data) {
-        res.send(data);
+        if (data.error) {
+          res.send(data.error);
+        } else {
+          res.send(data.output);
+        }
       });
     } else {
       compileJava.compileJava(code, function (data) {
-        res.send(data);
+        if (data.error) {
+          res.send(data.error);
+        } else {
+          res.send(data.output);
+        }
       });
     }
   }
