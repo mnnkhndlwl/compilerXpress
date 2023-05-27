@@ -8,7 +8,7 @@ exports.compileCpp = function (envData, code, fn) {
   path = "./codes/" + filename + ".cpp";
   var pathdusra = "./codes/" + filename + ".exe";
   var paththree = "./codes/" + filename + ".out";
-
+  console.log("call without input");
   fs.writeFile(path, code, function (err) {
     if (err) {
       console.log("ERROR: ".red + err);
@@ -322,7 +322,7 @@ exports.compileCpp = function (envData, code, fn) {
 exports.compileCPPWithInput = function (code, input, fn) {
     const filename = uuid.createId();
     const path = "./codes/";
-  
+    console.log("call to input");
     // Create temporary directory
     fs.mkdir(path + filename, { recursive: true }, function (err) {
       if (err) {

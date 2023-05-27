@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { publicRequest } from "../config";
 import Loader from "./Loader";
+import Editor from "@monaco-editor/react";
+
 
 function OnlineIDE() {
   const isDarkMode = useSelector((state) => state.darkMode);
@@ -46,27 +48,36 @@ function OnlineIDE() {
 
   return (
     <div
-      className={`container mt-10 ${
+      className={`mt-10 ${
         isDarkMode ? "bg-black text-white" : "bg-white text-black"
       }`}
     >
       <div className="h-full">
         <div className="flex flex-row items-center justify-center h-full w-full">
-          <textarea
+          {/* <textarea
             className="w-2/5 h-96 resize mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
             placeholder="Enter your code here"
             value={code}
             onChange={handleCodeChange}
-          ></textarea>
+          ></textarea> */}
+          <Editor
+            height="calc(100vh - 150px)"
+            width="60%"
+            theme={isDarkMode ? "vs-dark" : "light"}
+            language={lang}
+            defaultLanguage="python"
+            defaultValue="# Enter your code here"
+            onChange={(value) => { setCode(value) }}
+          />
 
           <div className="w-96 ml-10 items-start justify-center">
             <div className="w-full mb-10">
-              <label htmlFor="language" className="text-gray-700">
+              <label htmlFor="language" className={`${isDarkMode? "text-white" : "text-black"}`}>
                 Select Language:
               </label>
               <select
                 id="language"
-                className="w-full h-10 bg-white border border-gray-300 rounded mt-2 focus:outline-none"
+                className={`w-full h-10 ${!isDarkMode ? "bg-white" : "bg-black"} border border-gray-300 rounded mt-2 focus:outline-none`}
                 value={lang}
                 onChange={handleLanguageChange}
               >
@@ -77,7 +88,7 @@ function OnlineIDE() {
               </select>
             </div>
             <textarea
-              className="w-full h-full resize mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+              className={`w-full h-full ${!isDarkMode ? "bg-white text-black" : "bg-black text-white"} resize mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200`}
               placeholder="Enter input here"
               value={input}
               onChange={handleInputChange}

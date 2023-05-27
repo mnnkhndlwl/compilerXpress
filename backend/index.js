@@ -19,9 +19,9 @@ app.post("/compilecode", function (req, res) {
   var input = req.body.input;
   var inputRadio = req.body.inputRadio;
   var lang = req.body.lang;
-  console.log(code + input + inputRadio + lang);
+
   if (lang === "Python") {
-    if (inputRadio === "true") {
+    if (inputRadio === true) {
       compilePython.compilepywithinput(code, input, function (data) {
         if (data.error) {
           res.send(data.error);
@@ -39,7 +39,7 @@ app.post("/compilecode", function (req, res) {
       });
     }
   } else if (lang === "Java") {
-    if (inputRadio === "true") {
+    if (inputRadio === true) {
       compileJava.compileJavaWithInput(code, input, function (data) {
         if (data.error) {
           res.send(data.error);
@@ -58,7 +58,7 @@ app.post("/compilecode", function (req, res) {
     }
   }
  else if (lang === "C" || lang === "C++") {
-    if (inputRadio === "true") {
+    if (inputRadio === true) {
      // var envData = { OS: "windows", cmd: "g++" };
       compileCPP.compileCPPWithInput( code, input, function (data) {
         if (data.error) {
