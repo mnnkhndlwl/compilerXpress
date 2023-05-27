@@ -1,9 +1,9 @@
 var express = require("express");
 var path = require("path");
 var app = express();
-var compilePython = require("./modules/pymodule");
-var compileJava = require("./modules/javamodule");
-var compileCPP = require('./modules/cppmodule');
+var compilePython = require("./controllers/pymodule");
+var compileJava = require("./controllers/javamodule");
+var compileCPP = require('./controllers/cppmodule');
 var cors = require('cors');
 
 app.use(express.urlencoded({ extended: true }));
