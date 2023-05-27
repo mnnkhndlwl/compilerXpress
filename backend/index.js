@@ -40,8 +40,8 @@ app.post("/compilecode", function (req, res) {
   }
  else if (lang === "C" || lang === "C++") {
     if (inputRadio === "true") {
-      var envData = { OS: "windows", cmd: "g++" };
-      compileCPP.compileCPPWithInput( envData,code, input, function (data) {
+     // var envData = { OS: "windows", cmd: "g++" };
+      compileCPP.compileCPPWithInput( code, input, function (data) {
         if (data.error) {
           res.send(data.error);
         } else {

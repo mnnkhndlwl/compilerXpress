@@ -319,3 +319,66 @@ exports.compileCpp = function (envData, code, fn) {
 // }; //end of compileCPPWithInput
 
 
+exports.compileCPPWithInput = function (code, input, fn) {
+    const filename = uuid.createId();
+    const path = "./codes/";
+  
+    // Create temporary directory
+    fs.mkdir(path + filename, { recursive: true }, function (err) {
+      if (err) {
+        console.log("ERROR: " + err);
+        return;
+      }
+  
+      // Write C++ code to file
+      fs.writeFile(path + filename + "/main.cpp", code, function (err) {
+        if (err) {
+          console.log("ERROR: " + err);
+          return;
+        }
+
+        fs.writeFile(path + filename + "/input.txt", input, function (err) {
+            if (err) {
+              console.log("ERROR: " + err);
+              return;
+            }
+        })
+        console.log("INFO: " + filename + "/main.cpp created");
+  
+        // Compile C++ code
+        const compileCommand = "g++ " + path + filename + "/main.cpp -o " + path + filename + "/main";
+        exec(compileCommand, function (error, stdout, stderr) {
+          if (error) {
+            console.log("INFO: " + filename + "/main.cpp contained an error while compiling");
+            const out = { error: stderr };
+            fn(out);
+          } else {
+            console.log("INFO: " + filename + "/main.cpp successfully compiled");
+  
+            // Execute compiled program with input from input.txt // yaha main se phle dot tha
+            const executeCommand = "cd " + path + filename + " & main.exe < input.txt";
+            exec(executeCommand, function (error, stdout, stderr) {
+              if (error) {
+                console.log("INFO: " + filename + "/main.cpp contained an error while executing");
+  
+                if (error.toString().indexOf("Error: stdout maxBuffer exceeded.") !== -1) {
+                  const out = {
+                    error: "Error: stdout maxBuffer exceeded. You might have initialized an infinite loop.",
+                  };
+                  fn(out);
+                } else {
+                  const out = { error: stderr };
+                  fn(out);
+                }
+              } else {
+                console.log("INFO: " + filename + "/main.cpp successfully executed");
+  
+                const out = { output: stdout };
+                fn(out);
+              }
+            });
+          }
+        });
+      });
+    });
+  };
