@@ -1,10 +1,11 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
-var uuid = require("@paralleldrive/cuid2");
+// var uuid = require("@paralleldrive/cuid2");
+const { v1: uuidv1 } = require('uuid');
 var colors = require("colors");
 
 exports.compilepy = function (code, fn) {
-  var filename = uuid.createId();
+  var filename = uuidv1();
   var path = "./codes/" + filename + ".py";
   fs.writeFile(path, code, function (err) {
     if (!err) {
@@ -42,7 +43,7 @@ exports.compilepy = function (code, fn) {
 };
 
 exports.compilepywithinput = function (code, input, fn) {
-  var filename = uuid.createId();
+  var filename = uuidv1();
   var path = "./codes/" + filename + ".py";
   var pathdusra = "./codes/" + filename + "input.txt";
   fs.writeFile(path, code, function (err) {

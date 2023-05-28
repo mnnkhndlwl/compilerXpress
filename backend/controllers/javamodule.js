@@ -1,10 +1,11 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
-var uuid = require("@paralleldrive/cuid2");
+// var uuid = require("@paralleldrive/cuid2");
+const { v1: uuidv1 } = require('uuid');
 var colors = require("colors");
 
 exports.compileJava = function (code, fn) {
-  var dirname = uuid.createId();
+  var dirname = uuidv1();
   path = "./codes/" + dirname;
 
   fs.mkdir(path, 0777, function (err) {
@@ -70,7 +71,7 @@ exports.compileJava = function (code, fn) {
 };
 
 exports.compileJavaWithInput = function (code, input, fn) {
-  var dirname = uuid.createId();
+  var dirname = uuidv1();
   path = "./codes/" + dirname;
 
   fs.mkdir(path, 0777, function (err) {

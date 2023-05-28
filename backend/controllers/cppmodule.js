@@ -1,10 +1,11 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
-var uuid = require("@paralleldrive/cuid2");
+// var uuid = require("@paralleldrive/cuid2");
+const { v1: uuidv1 } = require('uuid');
 var colors = require("colors");
 
 exports.compileCpp = function (envData, code, fn) {
-  var filename = uuid.createId();
+  var filename = uuidv1();
   path = "./codes/" + filename + ".cpp";
   var pathdusra = "./codes/" + filename + ".exe";
   var paththree = "./codes/" + filename + ".out";
@@ -320,7 +321,7 @@ exports.compileCpp = function (envData, code, fn) {
 
 
 exports.compileCPPWithInput = function (code, input, fn) {
-    const filename = uuid.createId();
+    const filename = uuidv1();
     const path = "./codes/";
     console.log("call to input");
     // Create temporary directory

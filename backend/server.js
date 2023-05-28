@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/apna.html");
 });
 
 app.post("/compilecode", function (req, res) {
